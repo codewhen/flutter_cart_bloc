@@ -31,7 +31,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Cart Bloc',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.purple,
+          useMaterial3: true,
         ),
         routes: {
           "/": ((context) => RepositoryProvider(

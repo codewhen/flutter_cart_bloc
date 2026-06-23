@@ -10,6 +10,11 @@ class CartPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple,
+        foregroundColor: Colors.white,
+        titleTextStyle: TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 20,
+        ),
         elevation: 0,
         title: const Text("Cart App Using BLOC"),
       ),

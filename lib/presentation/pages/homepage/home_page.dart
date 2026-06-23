@@ -1,7 +1,6 @@
-import 'package:badges/badges.dart' show Badge;
 import 'package:cart_bloc/logic/bloc/cart/cart_bloc.dart';
 import 'package:cart_bloc/logic/cubit/products/products_cubit.dart';
-import 'package:flutter/material.dart' hide Badge;
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -78,15 +77,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.purple,
           elevation: 0,
+          backgroundColor: Colors.purple,
+          foregroundColor: Colors.white,
+          titleTextStyle: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+          ),
           actions: [
             IconButton(
               onPressed: () {
                 Navigator.of(context).pushNamed("/cart");
               },
               icon: Badge(
-                badgeContent: BlocBuilder<CartBloc, CartState>(
+                backgroundColor: Colors.purple.shade700,
+                label: BlocBuilder<CartBloc, CartState>(
                   builder: (context, state) {
                     if (state is CartLoaded) {
                       return Text(state.items.length.toString());
@@ -133,7 +138,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     padding: const EdgeInsets.symmetric(vertical: 22),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
+                      crossAxisCount: 2,
+                    ),
                     itemCount: state.products.length,
                     itemBuilder: (context, index) {
                       return Card(
@@ -181,33 +187,37 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   return Builder(
                                     builder: (contextRenderBox) {
                                       return OutlinedButton(
-                                          onPressed: () {
-                                            if (itemAddedToCart) {
-                                              context.read<CartBloc>().add(
-                                                  ItemRemoved(
-                                                      state.products[index]));
-                                            } else {
-                                              context.read<CartBloc>().add(
-                                                  ItemAdded(
-                                                      state.products[index]));
+                                        onPressed: () {
+                                          if (itemAddedToCart) {
+                                            context.read<CartBloc>().add(
+                                                ItemRemoved(
+                                                    state.products[index]));
+                                          } else {
+                                            context.read<CartBloc>().add(
+                                                ItemAdded(
+                                                    state.products[index]));
 
-                                              animateCartAdd(
-                                                contextRenderBox,
-                                                NetworkImage(
-                                                  state.products[index].image,
-                                                ),
-                                              );
-                                            }
-                                          },
-                                          style: OutlinedButton.styleFrom(
-                                            fixedSize:
-                                                const Size.fromWidth(200),
+                                            animateCartAdd(
+                                              contextRenderBox,
+                                              NetworkImage(
+                                                state.products[index].image,
+                                              ),
+                                            );
+                                          }
+                                        },
+                                        style: OutlinedButton.styleFrom(
+                                          fixedSize: const Size.fromWidth(200),
+                                          side: BorderSide(
+                                            color: Colors.purple.shade200,
                                           ),
-                                          child: Text(
-                                            itemAddedToCart ? "Remove" : "Add",
-                                            style: const TextStyle(
-                                                color: Colors.purple),
-                                          ));
+                                        ),
+                                        child: Text(
+                                          itemAddedToCart ? "Remove" : "Add",
+                                          style: const TextStyle(
+                                            color: Colors.purple,
+                                          ),
+                                        ),
+                                      );
                                     },
                                   );
                                 },
