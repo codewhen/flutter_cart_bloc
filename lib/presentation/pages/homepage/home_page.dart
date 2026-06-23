@@ -1,12 +1,12 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' show Badge;
 import 'package:cart_bloc/logic/bloc/cart/cart_bloc.dart';
 import 'package:cart_bloc/logic/cubit/products/products_cubit.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Badge;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         return const SizedBox();
       },
     );
-    Overlay.of(contextRenderBox)?.insert(overlayEntry);
+    Overlay.of(contextRenderBox).insert(overlayEntry);
     Future.delayed(const Duration(milliseconds: 500), () {
       overlayEntry.remove();
     });
@@ -86,15 +86,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 Navigator.of(context).pushNamed("/cart");
               },
               icon: Badge(
-                  badgeContent: BlocBuilder<CartBloc, CartState>(
-                    builder: (context, state) {
-                      if (state is CartLoaded) {
-                        return Text(state.items.length.toString());
-                      }
-                      return const Text("");
-                    },
-                  ),
-                  child: const Icon(Icons.shopping_bag)),
+                badgeContent: BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    if (state is CartLoaded) {
+                      return Text(state.items.length.toString());
+                    }
+                    return const Text("");
+                  },
+                ),
+                child: const Icon(Icons.shopping_bag),
+              ),
             )
           ],
           title: const Text("Cart App Using BLOC"),

@@ -6,7 +6,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 part 'cart_event.dart';
 part 'cart_state.dart';
 
-class CartBloc extends Bloc<CartEvent, CartState> with HydratedMixin {
+class CartBloc extends HydratedBloc<CartEvent, CartState> {
   CartBloc() : super(CartInitial()) {
     on<CartStarted>((event, emit) {
       if (state is CartInitial) {
